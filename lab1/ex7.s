@@ -1,21 +1,32 @@
 .data
-a: .dword 3
-b: .half -2
-c: .byte -3
-d: .zero 4
+a: .word 7, 9, 2, 3
 
 .text
+    la    t0, a
+    lw    t1, 0(t0)
 
-    lui    t3, a
-    lui    t4, a
-    lui    t5 a
-    lui    t6, a
+    li    t4, 2
+    li    t5, 0
 
-    lw    t2, b
-    mul    t0, t1, t3
 
-    lw    t1, c
-    add    t0, t0, t1
+check:
+    lw    t2, 4(t0)
+    blt    t4, t5, finish
+    blt    t1, t2, max
+    addi     t0, t0, 4
+    addi     t5, t5, 1
+    j    check
 
-    mv    a0, t0
-    li    a7, 1
+max:
+    mv t1, t2
+
+    addi    t0, t0, 4
+    addi    t5, t5, 1
+    j    check
+
+
+finish:
+# NOTE: the max value is stored on the t1 register
+    li    a7, 10
+    ecall
+
