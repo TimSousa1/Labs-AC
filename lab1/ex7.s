@@ -27,6 +27,4 @@ max:
 
 finish:
 # NOTE: the max value is stored on the t1 register
-    li    a7, 10
-    ecall
-
+nop
