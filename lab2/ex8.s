@@ -3,6 +3,8 @@
 
 .text
 # storing the registers
+addi    sp, sp, -16
+
 sw    t3, 0(sp)
 sw    t4, 4(sp)
 sw    t5, 8(sp)
