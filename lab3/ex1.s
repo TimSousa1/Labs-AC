@@ -10,9 +10,20 @@ lw    a1, x2
 lw    a2, y1
 lw    a3, y2
 
-jal dist_reg
+jal    dist_reg
 
+addi    sp, sp, -40
+# in RV64 each regidter occuppies 8 byteis
+sd    ra, 32(sp)
 
+# pushing the registers to the stack
+# (passing the arguments)
+sw    a0, 24(sp)
+sw    a1, 16(sp)
+sw    a2, 8(sp)
+sw    a3, 0(sp)
+
+jal    dist_stack
 
 # the a0 register holds the final value
 dist_reg:
@@ -26,26 +37,12 @@ add    a0, t0, t1
 ret
 
 dist_stack:
-addi    sp, sp, -24
-# in RV64 each regidter occuppies 8 byteis
-sd    ra, 24(sp)
-
-# pushing the registers to the stack
-# (passing the arguments)
-sw    a0, 12(sp)
-sw    a1, 8(sp)
-sw    a2, 4(sp)
-sw    a3, 0(sp)
-
 # popping them back to the registers
 # (getting the arguments)
 lw    t3, 0(sp)
-lw    t2, 4(sp)
-lw    t1, 8(sp)
-lw    t0, 12(sp)
-
-# placing the pinter back in position
-addi    sp, sp, 16
+lw    t2, 8(sp)
+lw    t1, 16(sp)
+lw    t0, 20(sp)
 
 # actually running the function
 sub    t0, t0, t1
