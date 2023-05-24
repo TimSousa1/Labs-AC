@@ -1,0 +1,29 @@
+findstr:
+a0 needle
+a1 text
+a2 needleLen
+a3 textLen
+
+t4 match
+
+    loop:
+    t5 i
+    t0 needle cpy
+    t1 text cpy
+
+    t2 needle char
+    t3 text char
+
+tmps for args for calling
+t2 text+1
+t3 textLen-1
+
+t1 i
+
+
+
+
+
+
+
+
