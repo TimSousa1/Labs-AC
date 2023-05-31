@@ -1,0 +1,16 @@
+1b
+
+ciclos: 263
+intrs. retired: 239
+ipc: 0.909
+
+1c
+ciclos: 163
+instrs. retired: 139
+ipc: 0.853
+
+original:
+ciclos: 163
+instrs. retired: 120
+ipc: 0.736
+

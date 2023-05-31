@@ -1,0 +1,8 @@
+# 7
+36-37
+40-41
+
+ipc < 1, stalls and flushes aren't considered as executed instructions
+because of this, some cycles end up being wasted
+loading the initial instructions also wastes some cycles since they're not immediatly executed
+
