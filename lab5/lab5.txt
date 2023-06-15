@@ -1,0 +1,51 @@
+tag: 24 index: 4 offset: 4
+
+A[10][8]=0x00000555 address = 0x7ffffa80
+B[10][8]=0x00700351 address = 0x7ffffe80
+
+tag: 0111 1111 1111 1111 1111 1010 index: 1000 offset: 0000
+tag: 0111 1111 1111 1111 1111 1110 index: 1000 offset: 0000
+
+before main: 28H 8M
+after main: 28H 520M
+while main: 0H 512M
+
+visto que apenas temos uma way de cache, e visto que a tag e diferente e o index o mesmo, a linha de cache sera substituida por completo, resultando num maior miss-rate e, consequentemente um hit-rate de 0.
+ao inserir um vetor que desalinhe o index, conseguimos substancialmente diminuir o miss-rate:
+
+int main(){
+    
+    register int i, j;
+    int A[16][16];
+    int D[16];
+    int B[16][16];
+
+    
+    for (i = 0; i < 16; i++){
+        for (j = 0; j < 16; j++){
+            D[j] = 1;
+            A[i][j] = B[i][j] + 1; // occupies 256*2 words in cache
+        }  
+    }
+    return 0;
+}
+
+after changes to C source code:
+before main: 29H 7M
+after main: 445H 359M
+during main: 416H 352M
+
+H - hits
+M - misses
+
+cache mod:
+2^1 lines; 2^1 ways; 2^4 words/line
+
+before main: 30H 6M
+after main: 509H 40M
+during main: 489H 34M
+
+H - hits
+M - misses
+
+ao usar 2 ways, nao havera sobreposicao da tag, sendo cada address encaminhado para uma way diferente. mais palavras por linha garantem um maior hit-rate visto que haverao menos tags diferentes, podendo a data ficar na mesma linha, apenas com offset diferente
